@@ -722,7 +722,7 @@ module HelpScout
     #  Name   Type
     #  count  Integer  Count of Conversation objects.
 
-    def conversation_count(mailboxId, status, modifiedSince)
+    def conversation_count(mailboxId, status, modifiedSince=nil, params = {})
       url = "/mailboxes/#{mailboxId}/conversations.json"
 
       page = 1
@@ -740,12 +740,25 @@ module HelpScout
 
       begin
         options["page"] = page
+        options.merge! params
         count = Client.request_count(@auth, url, options)
       rescue StandardError => e
         puts "Conversation Count Request failed: #{e.message}"
       end
     end
 
+    def search_conversation_count(params = {})
+      url = "/search/conversations.json"
+
+      options = {}
+
+      begin
+        options.merge! params
+        count = Client.request_count(@auth, url, options)
+      rescue StandardError => e
+        puts "Search Conversation Count Request failed: #{e.message}"
+      end
+    end
 
     # Get Attachment Data
     # http://developer.helpscout.net/conversations/
