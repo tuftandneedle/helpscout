@@ -411,7 +411,7 @@ module HelpScout
     #   conversation.
 
     class Thread
-      attr_reader :id, :assignedTo, :status, :createdAt, :createdBy, :source, :fromMailbox, :type, :state, :customer, :body, :to, :cc, :bcc, :attachments
+      attr_reader :id, :assignedTo, :status, :createdAt, :createdBy, :source, :fromMailbox, :type, :state, :customer, :body, :to, :cc, :bcc, :attachments, :openedAt, :actionType, :actionSourceId, :savedReplyId
 
       STATE_PUBLISHED = "published"
       STATE_DRAFT = "draft"
@@ -447,6 +447,11 @@ module HelpScout
         @to = object["to"]
         @cc = object["cc"]
         @bcc = object["bcc"]
+
+        @openedAt = DateTime.iso8601(object["openedAt"]) if object["openedAt"]
+        @actionType = object["actionType"]
+        @actionSourceId = object["actionSourceId"]
+        @savedReplyId = object["savedReplyId"]
 
         @attachments = []
         if object["attachments"]
