@@ -1067,4 +1067,18 @@ module HelpScout
       @activeCount = object["activeCount"]
     end
   end
+
+  class Rating
+    attr_reader :id, :ticketId, :threadId, :rating, :comments, :createdAt, :modifiedAt
+
+    def initialize(object)
+      @id = object["id"]
+      @ticketId = object["ticketId"]
+      @threadId = object["threadId"]
+      @rating = object["rating"]
+      @comments = object["comments"]
+      @createdAt = DateTime.iso8601(object["createdAt"]) if object["createdAt"]
+      @modifiedAt = DateTime.iso8601(object["modifiedAt"]) if object["modifiedAt"]
+    end
+  end
 end
